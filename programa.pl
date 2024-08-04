@@ -10,7 +10,7 @@ caracteristicasMago(harry, [coraje, amistoso, orgullo, inteligencia]).
 caracteristicasMago(hermione, [inteligencia, orgullo, responsabilidad]).
 caracteristicasMago(draco, [inteligencia, orgullo]).
 %noQuiereirA(Mago, Casa).
-noQuiereirA(harry, slytherin).
+noQuiereirA(harry, slytherin).  
 noQuiereirA(draco, hufflepuff).
 % casa(Casa).
 casa(gryffindor).
@@ -39,4 +39,11 @@ puedeEntrar(Mago, slytherin):-
 tieneCaracterPara(Mago, Casa):-
     caracteristicasMago(Mago, CaracteristicasMago), casa(Casa),
     forall(caracteristicaCasa(Casa, Caracteristica), member(Caracteristica, CaracteristicasMago)).
+% Punto 3
+% puedeQuedarSeleccionado(Mago, Casa).
+puedeQuedarSeleccionado(Mago, Casa):-
+    tieneCaracterPara(Mago, Casa),
+    puedeEntrar(Mago, Casa),
+    not(noQuiereirA(Mago, Casa)).
+puedeQuedarSeleccionado(hermione, gryffindor).
     
