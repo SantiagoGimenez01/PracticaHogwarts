@@ -1,25 +1,42 @@
-% mago(Persona).
-mago(harry).
-mago(draco).
-mago(hermione).
-% caracteristicasMago(Mago, caracteristicas(Sangre, Caracteristicas, OdiaCasa)).
-caracteristicasMago(harry, caracteristicas(mestiza, [coraje, amistoso, orgullo, inteligencia], [slytherin])).
-caracteristicasMago(hermione, caracteristicas(impura, [inteligencia, orgullo, responsabilidad], [])).
-caracteristicasMago(draco, caracteristicas(pura, [inteligencia, orgullo], [hufflepuff])).
+% esMago(Mago).
+esMago(Mago):-
+    tipoDeSangre(Mago, _).
+% tipoDeSangre(Mago, Sangre).
+tipoDeSangre(harry, mestiza).
+tipoDeSangre(hermione, impura).
+tipoDeSangre(draco, pura).
+% caracteristicasMago(Mago, Caracteristicas).
+caracteristicasMago(harry, [coraje, amistoso, orgullo, inteligencia]).
+caracteristicasMago(hermione, [inteligencia, orgullo, responsabilidad]).
+caracteristicasMago(draco, [inteligencia, orgullo]).
+%noQuiereirA(Mago, Casa).
+noQuiereirA(harry, slytherin).
+noQuiereirA(draco, hufflepuff).
+% casa(Casa).
+casa(gryffindor).
+casa(ravenclaw).
+casa(hufflepuff).
+casa(slytherin).
 % caracteristicaCasa(Casa, Caracteristica).
-caracteristicaCasa(gryffindor, [coraje]).
-caracteristicaCasa(slytherin, [orgullo, inteligencia]).
-caracteristicaCasa(ravenclaw, [inteligencia, responsabilidad]).
-caracteristicaCasa(hufflepuff, [amistoso]).
+caracteristicaCasa(gryffindor, coraje).
+caracteristicaCasa(slytherin, orgullo).
+caracteristicaCasa(slytherin, inteligencia).
+caracteristicaCasa(ravenclaw, responsabilidad).
+caracteristicaCasa(ravenclaw, inteligencia).
+caracteristicaCasa(hufflepuff, amistoso).
 % Punto 1
 % puedeEntrar(Mago, Casa).
-puedeEntrar(Mago, gryffindor):-
-    mago(Mago).
-puedeEntrar(Mago, ravenclaw):-
-    mago(Mago).
-puedeEntrar(Mago, hufflepuff):-
-    mago(Mago).
+puedeEntrar(Mago, Casa):-
+    esMago(Mago), 
+    casa(Casa),
+    Casa \= slytherin.
 puedeEntrar(Mago, slytherin):-
-    mago(Mago),
-    caracteristicasMago(Mago, caracteristicas(Sangre, _, _)),
-    not(Sangre = impura).
+    esMago(Mago),
+    tipoDeSangre(Mago, Sangre),
+    Sangre \= impura.
+% Punto 2
+% tieneCaracterPara(Mago, Casa).
+tieneCaracterPara(Mago, Casa):-
+    caracteristicasMago(Mago, CaracteristicasMago), casa(Casa),
+    forall(caracteristicaCasa(Casa, Caracteristica), member(Caracteristica, CaracteristicasMago)).
+    
