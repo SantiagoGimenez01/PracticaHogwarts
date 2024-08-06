@@ -5,10 +5,14 @@ esMago(Mago):-
 tipoDeSangre(harry, mestiza).
 tipoDeSangre(hermione, impura).
 tipoDeSangre(draco, pura).
+tipoDeSangre(neville, impura).
+tipoDeSangre(luna, pura).
 % caracteristicasMago(Mago, Caracteristicas).
 caracteristicasMago(harry, [coraje, amistoso, orgullo, inteligencia]).
-caracteristicasMago(hermione, [inteligencia, orgullo, responsabilidad]).
+caracteristicasMago(hermione, [inteligencia, orgullo, responsabilidad, amistoso]).
 caracteristicasMago(draco, [inteligencia, orgullo]).
+caracteristicasMago(neville, [responsabilidad, coraje, amistoso]).
+caracteristicasMago(luna, [amistoso, inteligencia, responsabilidad]).
 %noQuiereirA(Mago, Casa).
 noQuiereirA(harry, slytherin).  
 noQuiereirA(draco, hufflepuff).
@@ -49,15 +53,21 @@ puedeQuedarSeleccionado(hermione, gryffindor).
 % Punto 4
 % cadenaDeAmistades([Magos]).
 cadenaDeAmistades(ListaMagos):-
-    forall(member(Magos, ListaMagos), (caracteristicasMago(Magos, Caracteristicas), member(amistoso, Caracteristicas))),
+    todosAmistosos(ListaMagos),
     puedeEstarEnMismaCasa(ListaMagos).
 
-puedeEstarEnMismaCasa((Mago | RestoMagos)):-
-    findall(Casa, puedeQuedarSeleccionado(Mago, Casa), Casas),
-    nth0(0, RestoMagos, MagoSiguiente),
-    findall(Casa, puedeQuedarSeleccionado(MagoSiguiente, Casa), CasasSig),
-    Casas = CasasSig.
-puedeEstarEnMismaCasa(Mago).
+todosAmistosos(ListaMagos):-
+    forall(member(Mago, ListaMagos), esAmistoso(Mago)).
+esAmistoso(Mago):-
+    caracteristicasMago(Mago, Caracteristicas),
+    member(amistoso, Caracteristicas).
+
+puedeEstarEnMismaCasa([Mago, MagoSiguiente | RestoMagos]):-
+    puedeQuedarSeleccionado(Mago, Casa),
+    puedeQuedarSeleccionado(MagoSiguiente, Casa),
+    puedeEstarEnMismaCasa([MagoSiguiente | RestoMagos]).
+puedeEstarEnMismaCasa([_]).
+puedeEstarEnMismaCasa([]).
     
 
     
