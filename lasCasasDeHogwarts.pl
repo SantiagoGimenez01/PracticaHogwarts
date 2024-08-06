@@ -1,3 +1,4 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% PARTE 1 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % esMago(Mago).
 esMago(Mago):-
     tipoDeSangre(Mago, _).
@@ -68,6 +69,6 @@ puedeEstarEnMismaCasa([Mago, MagoSiguiente | RestoMagos]):-
     puedeEstarEnMismaCasa([MagoSiguiente | RestoMagos]).
 puedeEstarEnMismaCasa([_]).
 puedeEstarEnMismaCasa([]).
-    
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% PARTE 2 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     
