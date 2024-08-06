@@ -46,4 +46,18 @@ puedeQuedarSeleccionado(Mago, Casa):-
     puedeEntrar(Mago, Casa),
     not(noQuiereirA(Mago, Casa)).
 puedeQuedarSeleccionado(hermione, gryffindor).
+% Punto 4
+% cadenaDeAmistades([Magos]).
+cadenaDeAmistades(ListaMagos):-
+    forall(member(Magos, ListaMagos), (caracteristicasMago(Magos, Caracteristicas), member(amistoso, Caracteristicas))),
+    puedeEstarEnMismaCasa(ListaMagos).
+
+puedeEstarEnMismaCasa((Mago | RestoMagos)):-
+    findall(Casa, puedeQuedarSeleccionado(Mago, Casa), Casas),
+    nth0(0, RestoMagos, MagoSiguiente),
+    findall(Casa, puedeQuedarSeleccionado(MagoSiguiente, Casa), CasasSig),
+    Casas = CasasSig.
+puedeEstarEnMismaCasa(Mago).
+    
+
     
