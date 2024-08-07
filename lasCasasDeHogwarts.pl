@@ -102,6 +102,7 @@ hizoAccion(draco, irA(lasMazmorras)).
 hizoAccion(ron, ganarEnAjedrezMagico).
 hizoAccion(hermione, salvarAmigos).
 hizoAccion(harry, ganarleAVoldemort).
+hizoAccion(luna, salvarAmigos).
 
 % malaAccion(Accion).
 malaAccion(Accion):-
@@ -126,3 +127,12 @@ puntajeTotalDeUnaCasa(Casa, PuntajeTotal):-
 puntosDeMago(Mago, PuntajeTotal):-
     findall(Puntaje, (hizoAccion(Mago, Accion), puntaje(Accion, Puntaje)), Puntos),
     sumlist(Puntos, PuntajeTotal).
+
+% Punto 3
+/*
+Saber cuál es la casa ganadora de la copa, que se verifica para aquella casa que haya obtenido una 
+cantidad mayor de puntos que todas las otras.
+*/
+casaGanadora(Casa):-
+    esDe(_, Casa),
+    not((esDe(_, OtraCasa), puntajeTotalDeUnaCasa(OtraCasa, Puntaje1), puntajeTotalDeUnaCasa(Casa, Puntaje2), Puntaje1 > Puntaje2)).
