@@ -122,6 +122,7 @@ puntaje(irA(tercerPiso), -75).
 % Saber cuál es el puntaje total de una casa, que es la suma de los puntos obtenidos por sus miembros
 % puntajeTotalDeUnaCasa(Casa, Puntaje)
 puntajeTotalDeUnaCasa(Casa, PuntajeTotal):-
+    esDe(_, Casa),
     findall(Puntos, (esDe(Mago, Casa), puntosDeMago(Mago, Puntos)), Puntaje),
     sumlist(Puntaje, PuntajeTotal).
 puntosDeMago(Mago, PuntajeTotal):-
@@ -136,3 +137,23 @@ cantidad mayor de puntos que todas las otras.
 casaGanadora(Casa):-
     esDe(_, Casa),
     not((esDe(_, OtraCasa), puntajeTotalDeUnaCasa(OtraCasa, Puntaje1), puntajeTotalDeUnaCasa(Casa, Puntaje2), Puntaje1 > Puntaje2)).
+
+% Punto 4
+/*
+Queremos agregar la posibilidad de ganar puntos por responder preguntas en clase. La información que nos interesa de las respuestas 
+en clase son: cuál fue la pregunta, cuál es la dificultad de la pregunta y qué profesor la hizo.
+Por ejemplo, sabemos que Hermione respondió a la pregunta de dónde se encuentra un Bezoar, de dificultad 20, realizada por el 
+profesor Snape, y cómo hacer levitar una pluma, de dificultad 25, realizada por el profesor Flitwick.
+Modificar lo que sea necesario para que este agregado funcione con lo desarrollado hasta ahora, teniendo en cuenta que los puntos 
+que se otorgan equivalen a la dificultad de la pregunta, a menos que la haya hecho Snape, que da la mitad de puntos en relación a 
+la dificultad de la pregunta.
+*/
+
+% pregunta(CualEs, Dificultad, Profesor)
+
+hizoAccion(hermione, pregunta(dondeSeEncuentraUnBezoar, 20, snape)).
+hizoAccion(hermione, pregunta(comoHacerLevitarUnaPluma, 25, flitwick)).
+
+puntaje(pregunta(_, Dificultad, Profesor), Dificultad):-
+    Profesor \= snape.
+puntaje(pregunta(_, Dificultad, snape), Dificultad/2).
