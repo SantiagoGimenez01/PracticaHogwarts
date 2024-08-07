@@ -71,4 +71,48 @@ puedeEstarEnMismaCasa([_]).
 puedeEstarEnMismaCasa([]).
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% PARTE 2 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-    
+% esDe(Mago, Casa).
+esDe(hermione, gryffindor).
+esDe(ron, gryffindor).
+esDe(harry, gryffindor).
+esDe(draco, slytherin).
+esDe(luna, ravenclaw).
+
+% Punto 1
+% a) Saber si un mago es buen alumno, que se cumple si hizo alguna acción y ninguna de las cosas que hizo se considera 
+%    una mala acción (que son aquellas que provocan un puntaje negativo).
+% b) Saber si una acción es recurrente, que se cumple si más de un mago hizo esa misma acción.
+% esBuenAlumno(Mago).
+esBuenAlumno(Mago):-
+    hizoAccion(Mago, _),
+    forall(hizoAccion(Mago, Accion), not(malaAccion(Accion))).
+
+% esRecurrente(Accion).
+ esRecurrente(Accion):-
+    hizoAccion(UnMago, Accion),
+    hizoAccion(OtroMago, Accion),
+    UnMago \= OtroMago.
+% hizoAccion(Accion, Mago).
+hizoAccion(harry, andarFueraDeCama).
+hizoAccion(hermione, irA(tercerPiso)).
+hizoAccion(hermione, irA(seccionRestringidaBiblioteca)).
+hizoAccion(harry, irA(elBosque)).
+hizoAccion(harry, irA(tercerPiso)).
+hizoAccion(draco, irA(lasMazmorras)).
+hizoAccion(ron, ganarEnAjedrezMagico).
+hizoAccion(hermione, salvarAmigos).
+hizoAccion(harry, ganarleAVoldemort).
+
+% malaAccion(Accion).
+malaAccion(Accion):-
+    puntaje(Accion, Puntaje),
+    Puntaje < 0.
+
+% puntaje(Accion, Puntaje)
+puntaje(andarFueraDeCama, -50).
+puntaje(ganarleAVoldemort, 60).
+puntaje(ganarEnAjedrezMagico, 50).
+puntaje(salvarAmigos, 50).
+puntaje(irA(elBosque), -50).
+puntaje(irA(seccionRestringidaBiblioteca), -10).
+puntaje(irA(tercerPiso), -75).
