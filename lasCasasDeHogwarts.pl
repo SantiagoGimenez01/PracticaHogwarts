@@ -116,3 +116,13 @@ puntaje(salvarAmigos, 50).
 puntaje(irA(elBosque), -50).
 puntaje(irA(seccionRestringidaBiblioteca), -10).
 puntaje(irA(tercerPiso), -75).
+
+% Punto 2
+% Saber cuál es el puntaje total de una casa, que es la suma de los puntos obtenidos por sus miembros
+% puntajeTotalDeUnaCasa(Casa, Puntaje)
+puntajeTotalDeUnaCasa(Casa, PuntajeTotal):-
+    findall(Puntos, (esDe(Mago, Casa), puntosDeMago(Mago, Puntos)), Puntaje),
+    sumlist(Puntaje, PuntajeTotal).
+puntosDeMago(Mago, PuntajeTotal):-
+    findall(Puntaje, (hizoAccion(Mago, Accion), puntaje(Accion, Puntaje)), Puntos),
+    sumlist(Puntos, PuntajeTotal).
